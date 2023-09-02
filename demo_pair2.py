@@ -216,6 +216,10 @@ if __name__ == '__main__':
         
         vis_img = plot_keypoints(img, kpts)
         
+        window_width, window_height = 1600, 800  # 任意のウィンドウサイズを設定
+
+        vis_img = cv2.resize(vis_img, (window_width, window_height), interpolation=cv2.INTER_AREA)
+
         cv2.namedWindow(args.model)
         cv2.setWindowTitle(args.model, args.model)
         cv2.putText(vis_img, "Press 'q' or 'ESC' to stop.", (10,30), cv2.FONT_HERSHEY_SIMPLEX,1, (0,0,255),2, cv2.LINE_AA)

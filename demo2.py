@@ -6,10 +6,13 @@ import logging
 import argparse
 import numpy as np
 from tqdm import tqdm
-from alike import ALike, configs
+from alike2 import ALIKE
 
 import sys
 import torch
+import sys
+sys.path.append('/home/imonalc/ALIKE/train')
+
 
 
 class ImageLoader(object):
@@ -77,7 +80,9 @@ class SimpleTracker(object):
 
             out = copy.deepcopy(img)
             for pt1 in pts:
-                p1 = (int(round(pt1[0])), int(round(pt1[1])))
+                #p1 = (int(round(pt1[0])), int(round(pt1[1])))
+                p1 = (int(round(pt1[0].item())), int(round(pt1[1].item())))
+
                 cv2.circle(out, p1, 1, (0, 0, 255), -1, lineType=16)
         else:
             matches = self.mnn_mather(self.desc_prev, desc)
@@ -86,8 +91,10 @@ class SimpleTracker(object):
 
             out = copy.deepcopy(img)
             for pt1, pt2 in zip(mpts1, mpts2):
-                p1 = (int(round(pt1[0])), int(round(pt1[1])))
-                p2 = (int(round(pt2[0])), int(round(pt2[1])))
+                #p1 = (int(round(pt1[0])), int(round(pt1[1])))
+                #p2 = (int(round(pt2[0])), int(round(pt2[1])))
+                p1 = (int(round(pt1[0].item())), int(round(pt1[1].item())))
+                p2 = (int(round(pt2[0].item())), int(round(pt2[1].item())))
                 cv2.line(out, p1, p2, (0, 255, 0), lineType=16)
                 cv2.circle(out, p2, 1, (0, 0, 255), -1, lineType=16)
 
@@ -97,10 +104,13 @@ class SimpleTracker(object):
         return out, N_matches
 
     def mnn_mather(self, desc1, desc2):
-        sim = desc1 @ desc2.transpose()
+        sim = desc1 @ desc2.transpose(0, 1)
+        #sim = desc1 @ desc2.transpose()
         sim[sim < 0.9] = 0
-        nn12 = np.argmax(sim, axis=1)
-        nn21 = np.argmax(sim, axis=0)
+        #nn12 = np.argmax(sim, axis=1)
+        #nn21 = np.argmax(sim, axis=0)
+        nn12 = np.argmax(sim.cpu().numpy(), axis=1)
+        nn21 = np.argmax(sim.cpu().numpy(), axis=0)
         ids1 = np.arange(0, sim.shape[0])
         mask = (ids1 == nn21[nn12])
         matches = np.stack([ids1[mask], nn12[mask]])
@@ -129,11 +139,7 @@ if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO)
 
     image_loader = ImageLoader(args.input)
-    model = ALike(**configs[args.model],
-                  device=args.device,
-                  top_k=args.top_k,
-                  scores_th=args.scores_th,
-                  n_limit=args.n_limit)
+    model = ALIKE.load_from_checkpoint(checkpoint_path="train/training/log_train/train/Version-0825-140226/checkpoints/last.ckpt")
 
 
 
@@ -152,7 +158,7 @@ if __name__ == '__main__':
             break
         
         img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-        pred = model(img_rgb, sub_pixel=not args.no_sub_pixel)
+        pred = model(img_rgb)
         kpts = pred['keypoints']
         desc = pred['descriptors']
         runtime.append(pred['time'])

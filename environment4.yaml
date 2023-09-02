@@ -1,0 +1,20 @@
+name: ALIKE
+channels:
+  - pytorch
+  - defaults
+  - conda-forge
+  - nvidia/label/cuda-11.7.0
+dependencies:
+  - python=3.8
+  - numpy=1.19.5
+  - tqdm=4.60.0
+  - opencv=4.5.1
+  - pip
+  - pip:
+    - thop==0.0.31.post2005241907
+
+# conda install -c "nvidia/label/cuda-11.7.0" cuda-toolkit
+# pip3 install torch torchvision torchaudio
+# conda install -c conda-forge matplotlib
+
+#

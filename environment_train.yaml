@@ -1,0 +1,28 @@
+name: ALIKEt
+channels:
+  - pytorch
+  - defaults
+  - conda-forge
+  - nvidia/label/cuda-11.7.0
+dependencies:
+  - python=3.8
+  - numpy=1.19.5
+  - tqdm=4.60.0
+  - opencv=4.5.1
+  - pip
+  - pip:
+    - thop==0.0.31.post2005241907
+
+# conda install -c "nvidia/label/cuda-11.7.0" cuda-toolkit
+# conda install six
+# pip3 install torch torchvision torchaudio
+# conda install -c conda-forge matplotlib
+# conda install lightning=2.0.4 -c conda-forge
+# conda install -c conda-forge libpng
+# conda install -c conda-forge libjpeg-turbo
+
+# pip install torch torchvision torchaudio
+# pip install matplotlib
+# pip install h5py
+# pip install numba
+# pip install pytorch-lightning==1.9.5

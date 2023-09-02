@@ -1,0 +1,27 @@
+name: ALIKE3
+channels:
+  - pytorch
+  - defaults
+  - conda-forge
+dependencies:
+  - python=3.8
+  - numpy=1.19.5
+  - tqdm=4.60.0
+  - opencv=4.5.1
+  - pip
+  - pip:
+    - thop==0.0.31.post2005241907
+
+# conda env create -f environment.yaml
+# conda remove -n ALIKE3 --all
+# conda install -c "nvidia/label/cuda-11.7.0" cuda-toolkit
+# conda install pytorch torchvision torchaudio cudatoolkit=11.7.0 -c pytorch -c conda-forge
+# conda install -c conda-forge matplotlib
+# conda install -c anaconda h5py
+# conda install -c numba numba
+# conda install lightning=2.0.4 -c conda-forge
+# 9.5
+# conda install chardet
+# conda install -c conda-forge numba=0.54
+# conda install pillow
+
