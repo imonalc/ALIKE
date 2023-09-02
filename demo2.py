@@ -139,7 +139,7 @@ if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO)
 
     image_loader = ImageLoader(args.input)
-    model = ALIKE.load_from_checkpoint(checkpoint_path="train/training/log_train/train/Version-0825-140226/checkpoints/last.ckpt")
+    model = ALIKE.load_from_checkpoint(checkpoint_path="train/training/log_train/train/Version-0825-140226/checkpoints/last.ckpt") ###ここにチェックポイントを入れる
 
 
 
