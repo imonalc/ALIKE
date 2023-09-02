@@ -20,10 +20,12 @@ configs = {
                 'model_path': os.path.join(os.path.split(__file__)[0], 'models', 'alike-n.pth')},
     'alike-l': {'c1': 32, 'c2': 64, 'c3': 128, 'c4': 128, 'dim': 128, 'single_head': False, 'radius': 2,
                 'model_path': os.path.join(os.path.split(__file__)[0], 'models', 'alike-l.pth')},
+    'test': {'c1': 16, 'c2': 32, 'c3': 64, 'c4': 128, 'dim': 128, 'single_head': True, 'radius': 2,
+                'model_path': os.path.join(os.path.split(__file__)[0], 'models', 'test.pth')},
 }
 
 
-class ALike(ALNet):
+class ALike(ALNet): ###ALNet):###
     def __init__(self,
                  # ================================== feature encoder
                  c1: int = 32, c2: int = 64, c3: int = 128, c4: int = 128, dim: int = 128,
