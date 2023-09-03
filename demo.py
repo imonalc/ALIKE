@@ -10,6 +10,7 @@ from alike import ALike, configs
 
 import sys
 import torch
+sys.path.append('/home/imonalc/ALIKE/train')
 
 
 class ImageLoader(object):
@@ -111,7 +112,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='ALike Demo.')
     parser.add_argument('input', type=str, default='',
                         help='Image directory or movie file or "camera0" (for webcam0).')
-    parser.add_argument('--model', choices=['alike-t', 'alike-s', 'alike-n', 'alike-l', "test"], default="alike-t",
+    parser.add_argument('--model', choices=['alike-t', 'alike-s', 'alike-n', 'alike-l', "test"], default="alike-n",
                         help="The model configuration")
     parser.add_argument('--device', type=str, default='cuda', help="Running device (default: cuda).")
     parser.add_argument('--top_k', type=int, default=-1,
@@ -134,6 +135,10 @@ if __name__ == '__main__':
                   top_k=args.top_k,
                   scores_th=args.scores_th,
                   n_limit=args.n_limit)
+    
+    #ckp = "/home/imonalc/ALIKE/train/training/log_train/train/Version-0825-140226/checkpoints/last.ckpt"
+    #weight = torch.load(ckp)
+    #model.load_state_dict(weight["state_dict"])
 
 
 
