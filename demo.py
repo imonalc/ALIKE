@@ -136,9 +136,9 @@ if __name__ == '__main__':
                   scores_th=args.scores_th,
                   n_limit=args.n_limit)
     
-    #ckp = "/home/imonalc/ALIKE/train/training/log_train/train/Version-0825-140226/checkpoints/last.ckpt"
-    #weight = torch.load(ckp)
-    #model.load_state_dict(weight["state_dict"])
+    ckp = "/home/imonalc/ALIKE/train/training/log_train/train/Version-0825-140226/checkpoints/last.ckpt"
+    weight = torch.load(ckp)
+    model.load_state_dict(weight["state_dict"])
 
 
 

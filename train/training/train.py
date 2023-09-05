@@ -123,7 +123,7 @@ if __name__ == '__main__':
         num_workers = 0
         num_sanity_val_steps = 0
         # pretrained_model = 'log_train/train/Version-0701-231352/checkpoints/last.ckpt'
-        pretrained_model = 'log_train/train/Version-0708-174505/checkpoints/last.ckpt'
+        pretrained_model = 'log_train/train/Version-0825-140226/checkpoints/last.ckpt'
     else:
         accumulate_grad_batches = 16
         num_workers = 8
