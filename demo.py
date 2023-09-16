@@ -157,6 +157,7 @@ if __name__ == '__main__':
             break
         
         img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+        print(img_rgb.shape)
         pred = model(img_rgb, sub_pixel=not args.no_sub_pixel)
         kpts = pred['keypoints']
         desc = pred['descriptors']
