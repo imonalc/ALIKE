@@ -160,6 +160,7 @@ if __name__ == '__main__':
         pred = model(img_rgb, sub_pixel=not args.no_sub_pixel)
         kpts = pred['keypoints']
         desc = pred['descriptors']
+        print(kpts.shape, desc.shape)
         runtime.append(pred['time'])
 
         out, N_matches = tracker.update(img, kpts, desc)
