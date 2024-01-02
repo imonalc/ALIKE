@@ -188,7 +188,7 @@ if __name__ == '__main__':
 
     logging.basicConfig(level=logging.INFO)
 
-    image_loader = ImageLoader(args.input)
+    image_loader = ImageLoader("assets/kitti/000100.png")#args.input)
     model = ALike(**configs[args.model],
                   device=args.device,
                   top_k=args.top_k,

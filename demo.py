@@ -99,7 +99,7 @@ class SimpleTracker(object):
 
     def mnn_mather(self, desc1, desc2):
         sim = desc1 @ desc2.transpose()
-        sim[sim < 0.9] = 0
+        sim[sim < 0.3] = 0
         nn12 = np.argmax(sim, axis=1)
         nn21 = np.argmax(sim, axis=0)
         ids1 = np.arange(0, sim.shape[0])
@@ -156,18 +156,28 @@ if __name__ == '__main__':
         if img is None:
             break
         
-        img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-        print(img_rgb.shape)
-        pred = model(img_rgb, sub_pixel=not args.no_sub_pixel)
-        kpts = pred['keypoints']
-        desc = pred['descriptors']
+        alike_flag = 1
+        if alike_flag: #
+            img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+            print(img_rgb.shape)
+            pred = model(img_rgb, sub_pixel=not args.no_sub_pixel)
+            kpts = pred['keypoints']
+            desc = pred['descriptors']
+        else:
+            orb = cv2.ORB_create(scoreType=cv2.ORB_HARRIS_SCORE, nfeatures=10000)
+            kpts, desc = orb.detectAndCompute(img, None)
+            kpts = np.array([kp.pt for kp in kpts])
+            desc = np.array(desc)
         print(kpts.shape, desc.shape)
-        runtime.append(pred['time'])
+        #runtime.append(pred['time'])
 
         out, N_matches = tracker.update(img, kpts, desc)
-
-        ave_fps = (1. / np.stack(runtime)).mean()
-        status = f"Fps:{ave_fps:.1f}, Keypoints/Matches: {len(kpts)}/{N_matches}"
+        if alike_flag: #
+            runtime.append(pred['time'])
+            ave_fps = (1. / np.stack(runtime)).mean()
+            status = f"Fps:{ave_fps:.1f}, Keypoints/Matches: {len(kpts)}/{N_matches}"
+        else:
+            status = f"Keypoints/Matches: {len(kpts)}/{N_matches}"
         progress_bar.set_description(status)
 
         if not args.no_display:
